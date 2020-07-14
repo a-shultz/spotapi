@@ -7,34 +7,18 @@ jobs:
           GO111MODULE: "on"
 
     steps:
+      - checkout
+
       - run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
       - run: chmod +x ./cc-test-reporter
       - run: ./cc-test-reporter before-build
 
-      - run: mkdir spotapi && cd ./spotapi
       - run: go get -v github.com/onsi/ginkgo/ginkgo
       - run: go get -v github.com/onsi/gomega
       - run: go get -v -t ./...
       - run: export PATH=$PATH:$HOME/go/bin
 
-  tests:
-    steps:
-      - checkout
       - run: mkdir cov
       - run: ginkgo -r --randomizeAllSpecs --randomizeSuites --failOnPending --cover --coverprofile=c.out --outputdir=cov --trace --race --compilers=2
 
-  after-tests:
-    steps:
-      - run: ../cc-test-reporter after-build --exit-code ./spotapi/cov/c.out
-
-workflows:
-  version: 2
-  build-test:
-    jobs:
-      - build
-      - tests:
-          requires:
-            - build
-      - after-tests:
-          requires:
-            - tests
+      - run: ../cc-test-reporter after-build --exit-code ./cov/c.out
