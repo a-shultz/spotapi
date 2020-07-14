@@ -25,4 +25,3 @@ jobs:
 
       - run: ./cc-test-reporter format-coverage --input-type gocov -p spotapi
       - run: ./cc-test-reporter upload-coverage
-      - run: ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
