@@ -32,9 +32,9 @@ workflows:
   build-test:
     jobs:
       - build
-      - tests
+      - tests:
           requires:
             - build
-      - after-tests
+      - after-tests:
           requires:
             - tests
