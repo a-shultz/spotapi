@@ -19,8 +19,10 @@ jobs:
       - run: export PATH=$PATH:$HOME/go/bin
 
       - run: mkdir cov
-      - run: ginkgo -r --randomizeAllSpecs --randomizeSuites --failOnPending --cover --coverprofile=c.out --outputdir=cov --trace --race --compilers=2
+      - run: ginkgo -r --randomizeAllSpecs --randomizeSuites --failOnPending --cover --coverprofile=cover.out --outputdir=cov --trace --race --compilers=2
 
-      - run: ./cc-test-reporter format-coverage --input-type gocov COVERAGE_FILE=./cov/c.out
+      - run: mv ./cov/cover.out .
+
+      - run: ./cc-test-reporter format-coverage --input-type gocov
       - run: ./cc_test-reporter upload-coverage
       - run: ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
