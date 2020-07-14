@@ -7,7 +7,7 @@ jobs:
     steps:
       - checkout
       
-      - run: go get -v github.com/onsi/ginkgo/ginkgo
+      - run: go get -u github.com/onsi/ginkgo/ginkgo
       - run: go get -v github.com/onsi/gomega
       - run: go get -v -t ./...
       - run: export PATH=$PATH:$HOME/go/bin
