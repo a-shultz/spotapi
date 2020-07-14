@@ -23,15 +23,39 @@ var _ = Describe("URI", func() {
 		uri, err = response.NewURI(resourceType, id)
 	})
 
-	Describe("calling NewURI()", func() {
+	Context("when a URI is created", func() {
 		Context("with valid input", func() {
-			Specify("return a URI pointer", func() {
+			Specify("a URI pointer is returned", func() {
 				Expect(uri).ToNot(BeNil())
 				Expect(uri).To(BeAssignableToTypeOf(&response.URI{}))
 			})
 
-			Specify("does not return an error", func() {
+			Specify("no error occurs", func() {
 				Expect(err).ToNot(HaveOccurred())
+			})
+
+			It("has a Spotify ID", func() {
+				Expect(uri.ID()).To(Equal("6rqhFgbbKwnb9MLmUQDhG6"))
+			})
+
+			It("has a resource type", func() {
+				Expect(uri.ResourceType()).To(Equal("track"))
+			})
+
+			It("has a Spotify URI", func() {
+				Expect(uri.URI()).To(Equal("spotify:track:6rqhFgbbKwnb9MLmUQDhG6"))
+			})
+
+			It("has a Spotify API URL", func() {
+				Expect(uri.APIURL()).To(Equal("https://api.spotify.com/v1/tracks/6rqhFgbbKwnb9MLmUQDhG6"))
+			})
+
+			It("has a Spotify Open URL", func() {
+				Expect(uri.OpenURL()).To(Equal("https://open.spotify.com/track/6rqhFgbbKwnb9MLmUQDhG6"))
+			})
+
+			It("has a Spotify Play URL", func() {
+				Expect(uri.PlayURL()).To(Equal("https://play.spotify.com/track/6rqhFgbbKwnb9MLmUQDhG6"))
 			})
 		})
 
@@ -41,64 +65,28 @@ var _ = Describe("URI", func() {
 					id = "aaBB00"
 				})
 
-				Specify("return nil instead of the URI pointer", func() {
+				Specify("a nil pointer is returned", func() {
 					Expect(uri).To(BeNil())
 				})
 
-				Specify("return an error", func() {
+				Specify("an error occurs", func() {
 					Expect(err).To(HaveOccurred())
 				})
 			})
 
 			Context("with an ID that is not in base62 encoding", func() {
 				BeforeEach(func() {
-					id = "!@#$ abcdefghijklmnopq"
+					id = "aaBB00"
 				})
 
-				Specify("return nil instead of the URI pointer", func() {
+				Specify("a nil pointer is returned", func() {
 					Expect(uri).To(BeNil())
 				})
 
-				Specify("return an error", func() {
+				Specify("an error occurs", func() {
 					Expect(err).To(HaveOccurred())
 				})
 			})
-		})
-	})
-
-	Describe("calling uri.ID()", func() {
-		It("returns the Spotify ID", func() {
-			Expect(uri.ID()).To(Equal("6rqhFgbbKwnb9MLmUQDhG6"))
-		})
-	})
-
-	Describe("calling uri.ResourceType()", func() {
-		It("returns the resource type", func() {
-			Expect(uri.ResourceType()).To(Equal("track"))
-		})
-	})
-
-	Describe("calling uri.URI()", func() {
-		It("returns the Spotify ID for the resource", func() {
-			Expect(uri.URI()).To(Equal("spotify:track:6rqhFgbbKwnb9MLmUQDhG6"))
-		})
-	})
-
-	Describe("calling uri.APIURL()", func() {
-		It("returns the URL referencing the location of the resource using the Spotify API", func() {
-			Expect(uri.APIURL()).To(Equal("https://api.spotify.com/v1/tracks/6rqhFgbbKwnb9MLmUQDhG6"))
-		})
-	})
-
-	Describe("calling uri.OpenURL()", func() {
-		It("returns the URL for opening the resource on a web browser", func() {
-			Expect(uri.OpenURL()).To(Equal("https://open.spotify.com/track/6rqhFgbbKwnb9MLmUQDhG6"))
-		})
-	})
-
-	Describe("calling uri.PlayURL()", func() {
-		It("returns the URL for playing the resource on a web browser", func() {
-			Expect(uri.PlayURL()).To(Equal("https://play.spotify.com/track/6rqhFgbbKwnb9MLmUQDhG6"))
 		})
 	})
 })

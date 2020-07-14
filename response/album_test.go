@@ -6,65 +6,60 @@ import (
 	"spotapi/response"
 )
 
-var _ = Describe("Album", func() {
+var _ = Describe("Full Album Response", func() {
+	var (
+		json  []byte
+		album *response.FullAlbumResponse
+		err   error
+	)
 
-	Describe("FullAlbum", func() {
-		var(
-			json []byte
-		)
+	BeforeEach(func() {
+		json = ReadJSON("./testJSON/validAlbum.json")
+	})
 
-		BeforeEach(func() {
-			json = ReadJSON("./testJSON/validAlbum.json")
-		})
+	JustBeforeEach(func() {
+		album, err = response.NewFullAlbumResponse(json)
+	})
 
-		Describe("FullAlbumResponse", func() {
-			Describe("calling NewFullAlbumResponse()", func() {
-				Context("with valid JSON", func() {
-					var (
-						fullAlbumResponse *response.FullAlbumResponse
-						err error
-					)
-
-					BeforeEach(func() {
-						fullAlbumResponse, err = response.NewFullAlbumResponse(json)
-					})
-
-					Specify("returns a FullAlbumResponse pointer", func() {
-						Expect(fullAlbumResponse).ToNot(BeNil())
-						Expect(fullAlbumResponse).To(BeAssignableToTypeOf(&response.FullAlbumResponse{}))
-					})
-
-					Specify("does not error", func() {
-						Expect(err).ToNot(HaveOccurred())
-					})
-				})
+	Context("when a Full Album Response is created", func() {
+		Context("with valid json", func() {
+			Specify("a FullAlbumResponse pointer is returned", func() {
+				Expect(album).ToNot(BeNil())
+				Expect(album).To(BeAssignableToTypeOf(&response.FullAlbumResponse{}))
 			})
-		})
 
-		Describe("calling NewFullAlbum()", func() {
-			Context("with valid JSON", func() {
-				var (
-					fullAlbum *response.FullAlbum
-					err error
-				)
-
-				BeforeEach(func() {
-					fullAlbum, err = response.NewFullAlbum(json)
-				})
-
-				Specify("returns a FullAlbum pointer", func() {
-					Expect(fullAlbum).ToNot(BeNil())
-					Expect(fullAlbum).To(BeAssignableToTypeOf(&response.FullAlbum{}))
-				})
-
-				Specify("does not return an error", func() {
-					Expect(err).ToNot(HaveOccurred())
-				})
+			Specify("no error occurs", func() {
+				Expect(err).ToNot(HaveOccurred())
 			})
 		})
 	})
+})
 
-	Describe("SimplifiedAlbum", func() {
+var _ = Describe("Full Album", func() {
+	var (
+		json  []byte
+		album *response.FullAlbum
+		err   error
+	)
 
+	BeforeEach(func() {
+		json = ReadJSON("./testJSON/validAlbum.json")
+	})
+
+	JustBeforeEach(func() {
+		album, err = response.NewFullAlbum(json)
+	})
+
+	Context("when a Full Album is created", func() {
+		Context("with valid JSON", func() {
+			Specify("a FullAlbum pointer is returned", func() {
+				Expect(album).ToNot(BeNil())
+				Expect(album).To(BeAssignableToTypeOf(&response.FullAlbum{}))
+			})
+
+			Specify("no error occurs", func() {
+				Expect(err).ToNot(HaveOccurred())
+			})
+		})
 	})
 })
