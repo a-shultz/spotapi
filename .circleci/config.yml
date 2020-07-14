@@ -4,12 +4,15 @@ jobs:
     docker:
       - image: circleci/golang:1.14.4
       
+    env:
+      - GO111MODULE=on
+      
     steps:
       - checkout
       
       - run: go get -v github.com/onsi/ginkgo/ginkgo
       - run: go get -v github.com/onsi/gomega
-      - env GO111MODULE=on go get -v -t ./...
+      - run: go get -v -t ./...
       - run: export PATH=$PATH:$HOME/go/bin
 
       - run: ginkgo -r --randomizeAllSpecs --randomizeSuites --failOnPending --cover --trace --race --compilers=2
