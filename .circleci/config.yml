@@ -5,13 +5,19 @@ jobs:
       - image: circleci/golang:1.14.4
         environment:
           GO111MODULE: "on"
-      
+
     steps:
-      - checkout
-      
+      - run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+      - run: chmod +x ./cc-test-reporter
+      - run: ./cc-test-reporter before-build
+
       - run: go get -v github.com/onsi/ginkgo/ginkgo
       - run: go get -v github.com/onsi/gomega
       - run: go get -v -t ./...
       - run: export PATH=$PATH:$HOME/go/bin
 
-      - run: ginkgo -r --randomizeAllSpecs --randomizeSuites --failOnPending --cover --trace --race --compilers=2
+      - checkout
+
+      - run: mkdir cov
+      - run: ginkgo -r --randomizeAllSpecs --randomizeSuites --failOnPending --cover --coverprofile=c.out --outputdir=cov --trace --race --compilers=2
+      - run: ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
