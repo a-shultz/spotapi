@@ -1,0 +1,17 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/golang:1.14.4
+
+    install:
+      - go get -v github.com/onsi/ginkgo/ginkgo
+      - go get -v github.com/onsi/gomega
+      - go get -v -t ./...
+      - export PATH=$PATH:$HOME/gopath/bin
+
+    steps:
+      - checkout
+
+      - run: go get -v -t -d ./...
+      - run: ginkgo -r --randomizeAllSpecs --randomizeSuites --failOnPending --cover --trace --race --compilers=2
