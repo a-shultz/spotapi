@@ -11,13 +11,25 @@ jobs:
       - run: chmod +x ./cc-test-reporter
       - run: ./cc-test-reporter before-build
 
+      - run: mkdir spotapi && cd ./spotapi
       - run: go get -v github.com/onsi/ginkgo/ginkgo
       - run: go get -v github.com/onsi/gomega
       - run: go get -v -t ./...
       - run: export PATH=$PATH:$HOME/go/bin
 
+  tests:
+    steps:
       - checkout
-
       - run: mkdir cov
       - run: ginkgo -r --randomizeAllSpecs --randomizeSuites --failOnPending --cover --coverprofile=c.out --outputdir=cov --trace --race --compilers=2
-      - run: ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+
+  after-tests:
+    steps:
+      - run: ../cc-test-reporter after-build --exit-code ./spotapi/cov/c.out
+
+workflows:
+  build-test:
+    jobs:
+      - build
+      - tests
+      - after-tests
