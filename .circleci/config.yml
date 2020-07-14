@@ -13,5 +13,4 @@ jobs:
     steps:
       - checkout
 
-      - run: go get -v -t -d ./...
       - run: ginkgo -r --randomizeAllSpecs --randomizeSuites --failOnPending --cover --trace --race --compilers=2
