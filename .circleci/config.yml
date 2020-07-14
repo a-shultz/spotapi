@@ -21,4 +21,5 @@ jobs:
       - run: mkdir cov
       - run: ginkgo -r --randomizeAllSpecs --randomizeSuites --failOnPending --cover --coverprofile=c.out --outputdir=cov --trace --race --compilers=2
 
-      - run: ./cc-test-reporter after-build --exit-code ./cov/c.out
+      - run: ./cc-test-reporter upload-coverage -i ./cov/c.out
+      - run: ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
