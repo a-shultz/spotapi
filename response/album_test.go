@@ -13,16 +13,16 @@ var _ = Describe("Full Album Response", func() {
 		err   error
 	)
 
-	BeforeEach(func() {
-		json = ReadJSON("./testJSON/validAlbum.json")
-	})
-
 	JustBeforeEach(func() {
 		album, err = response.NewAlbumFullResponse(json)
 	})
 
 	Context("when a Full Album Response is created", func() {
 		Context("with valid json", func() {
+			BeforeEach(func() {
+				json = ReadJSON("./testJSON/album/full/valid/valid.json")
+			})
+
 			Specify("a AlbumFullResponse pointer is returned", func() {
 				Expect(album).ToNot(BeNil())
 				Expect(album).To(BeAssignableToTypeOf(&response.AlbumFullResponse{}))
@@ -34,7 +34,7 @@ var _ = Describe("Full Album Response", func() {
 		})
 		Context("with invalid json", func() {
 			BeforeEach(func() {
-				json = []byte(`{ "popularity": "very" }`)
+				json = ReadJSON("./testJSON/album/full/invalid/invalid.json")
 			})
 
 			Specify("a nil pointer is returned", func() {
@@ -57,7 +57,7 @@ var _ = Describe("Full Album", func() {
 	)
 
 	BeforeEach(func() {
-		json = ReadJSON("./testJSON/validAlbum.json")
+		json = ReadJSON("./testJSON/album/full/valid/valid.json")
 	})
 
 	JustBeforeEach(func() {
