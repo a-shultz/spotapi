@@ -35,16 +35,7 @@ var _ = Describe("Artist Simple Response", func() {
 		})
 		Context("with invalid JSON", func() {
 			BeforeEach(func() {
-				json = []byte(`{{
-					"external_urls": {
-					"spotify": "https://open.spotify.com/artist/5mlbvTfWUOfDrUIK6dkNzv"
-					},
-					"href": "https://api.spotify.com/v1/artists/5mlbvTfWUOfDrUIK6dkNzv",
-					"id": "5mlbvTfWUOfDrUIK6dkNzv",
-					"name": "Poppy",
-					"type": "artist",
-					"uri": "spotify:artist:5mlbvTfWUOfDrUIK6dkNzv"
-				}`)
+				json = ReadJSON("./testJSON/artist/simple/invalid/invalid.json")
 			})
 
 			JustBeforeEach(func() {
