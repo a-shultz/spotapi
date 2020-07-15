@@ -14,14 +14,14 @@ var _ = Describe("Artist Simple Response", func() {
 		err    error
 	)
 
+	JustBeforeEach(func() {
+		artist, err = response.NewArtistSimpleResponse(json)
+	})
+
 	Context("when an Artist Simple Response is created", func() {
 		Context("with valid JSON", func() {
 			BeforeEach(func() {
 				json = ReadJSON("./testJSON/artist/simple/valid/valid.json")
-			})
-
-			JustBeforeEach(func() {
-				artist, err = response.NewArtistSimpleResponse(json)
 			})
 
 			Specify("an Artist Simple Response pointer is returned", func() {
@@ -33,13 +33,10 @@ var _ = Describe("Artist Simple Response", func() {
 				Expect(err).ToNot(HaveOccurred())
 			})
 		})
+
 		Context("with invalid JSON", func() {
 			BeforeEach(func() {
 				json = ReadJSON("./testJSON/artist/simple/invalid/invalid.json")
-			})
-
-			JustBeforeEach(func() {
-				artist, err = response.NewArtistSimpleResponse(json)
 			})
 
 			Specify("a nil pointer is returned", func() {
