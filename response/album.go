@@ -98,6 +98,10 @@ type AlbumSimple struct {
 	uri              URI
 }
 
+type AlbumPageResponse struct{}
+
+type AlbumPage struct{}
+
 type AlbumSavedResponse struct{}
 
 type AlbumSaved struct {
