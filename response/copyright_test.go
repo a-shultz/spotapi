@@ -9,20 +9,17 @@ import (
 
 var _ = Describe("Copyright Response", func() {
 	var (
-		json []byte
+		json      []byte
 		copyright *response.CopyrightResponse
 		err       error
 	)
 
-	BeforeEach(func() {
-		json = []byte(`{
-			"text": "(P) 2019 Zelig Records, LLC",
-			"type": "P"
-		}`)
-	})
-
 	Context("when a Copyright Response is created", func() {
 		Context("with valid JSON", func() {
+			BeforeEach(func() {
+				json = ReadJSON("./testJSON/copyright/valid/typeP.json")
+			})
+
 			JustBeforeEach(func() {
 				copyright, err = response.NewCopyrightResponse(json)
 			})
@@ -38,10 +35,7 @@ var _ = Describe("Copyright Response", func() {
 		})
 		Context("with invalid JSON", func() {
 			BeforeEach(func() {
-				json = []byte(`{
-						"text": "(P) 2019 Zelig Records, LLC",
-						"type": 12
-					}`)
+				json = ReadJSON("./testJSON/copyright/invalid/invalid.json")
 			})
 
 			JustBeforeEach(func() {
@@ -61,15 +55,12 @@ var _ = Describe("Copyright Response", func() {
 
 var _ = Describe("Copyright", func() {
 	var (
-		json []byte
+		json      []byte
 		copyright *response.Copyright
 	)
 
 	BeforeEach(func() {
-		json = []byte(`{
-			"text": "(P) 2019 Zelig Records, LLC",
-			"type": "P"
-		}`)
+		json = ReadJSON("./testJSON/copyright/valid/typeP.json")
 	})
 
 	JustBeforeEach(func() {
@@ -98,22 +89,6 @@ var _ = Describe("Copyright", func() {
 		})
 	})
 
-	Context("that is type C", func() {
-		BeforeEach(func() {
-			json = []byte(`{
-				"text": "(C) 2020 The Very Real Copyright Company LLC",
-				"type": "C"
-			}`)
-		})
-		It("is type C", func() {
-			Expect(copyright.IsTypeC()).To(BeTrue())
-		})
-
-		It("is not type P", func() {
-			Expect(copyright.IsTypeP()).To(BeFalse())
-		})
-	})
-
 	Context("that is type P", func() {
 		It("is not type C", func() {
 			Expect(copyright.IsTypeC()).To(BeFalse())
@@ -121,6 +96,20 @@ var _ = Describe("Copyright", func() {
 
 		It("is type P", func() {
 			Expect(copyright.IsTypeP()).To(BeTrue())
+		})
+	})
+
+	Context("that is type C", func() {
+		BeforeEach(func() {
+			json = ReadJSON("./testJSON/copyright/valid/typeC.json")
+		})
+
+		It("is type C", func() {
+			Expect(copyright.IsTypeC()).To(BeTrue())
+		})
+
+		It("is not type P", func() {
+			Expect(copyright.IsTypeP()).To(BeFalse())
 		})
 	})
 })

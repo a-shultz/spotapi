@@ -16,20 +16,16 @@ var _ = Describe("Image Response", func() {
 		err   error
 	)
 
-	BeforeEach(func() {
-		data = []byte(`{
-			"height": 640,
-			"url": "https://i.scdn.co/image/ab67616d0000b273f142205e336ec0af3e1a4eb0",
-			"width": 640
-		}`)
-	})
-
 	JustBeforeEach(func() {
 		image, err = response.NewImageResponse(data)
 	})
 
 	Context("when an Image Response is created", func() {
 		Context("with valid JSON", func() {
+			BeforeEach(func() {
+				data = ReadJSON("./testJSON/image/valid/valid.json")
+			})
+
 			Specify("an Image Response pointer is returned", func() {
 				Expect(image).ToNot(BeNil())
 				Expect(image).To(BeAssignableToTypeOf(&response.ImageResponse{}))
@@ -42,11 +38,7 @@ var _ = Describe("Image Response", func() {
 
 		Context("with invalid JSON", func() {
 			BeforeEach(func() {
-				data = []byte(`{
-					"height"": "kinda average",
-					"url": "https://i.scdn.co/image/ab67616d0000b273f142205e336ec0af3e1a4eb0",
-					"width": 640
-				}`)
+				data = ReadJSON("./testJSON/image/invalid/invalid.json")
 			})
 
 			Specify("a nil pointer is returned", func() {
@@ -69,24 +61,19 @@ var _ = Describe("Image", func() {
 		err           error
 	)
 
-	BeforeEach(func() {
-		data = []byte(`{
-			"height": 640,
-			"url": "https://i.scdn.co/image/ab67616d0000b273f142205e336ec0af3e1a4eb0",
-			"width": 640
-		}`)
-
-	})
-
-	JustBeforeEach(func() {
-		imageResponse, responseErr = response.NewImageResponse(data)
-		Expect(imageResponse).ToNot(BeNil())
-		Expect(responseErr).ToNot(HaveOccurred())
-		image, err = response.NewImage(imageResponse)
-	})
-
 	Context("when an Image is created", func() {
 		Context("with a valid url", func() {
+			BeforeEach(func() {
+				data = ReadJSON("./testJSON/image/valid/valid.json")
+			})
+
+			JustBeforeEach(func() {
+				imageResponse, responseErr = response.NewImageResponse(data)
+				Expect(imageResponse).ToNot(BeNil())
+				Expect(responseErr).ToNot(HaveOccurred())
+				image, err = response.NewImage(imageResponse)
+			})
+
 			Specify("an Image pointer is returned", func() {
 				Expect(image).ToNot(BeNil())
 				Expect(image).To(BeAssignableToTypeOf(&response.Image{}))
@@ -129,30 +116,9 @@ var _ = Describe("Image", func() {
 				Expect(image).To(BeNil())
 				Expect(err).To(HaveOccurred())
 			},
-			Entry(
-				"with an invalid url",
-				[]byte(`{
-					"height": 640,
-					"url": ":https://i.scdn.co/image/ab67616d0000b273f142205e336ec0af3e1a4eb0",
-					"width": 640
-				}`),
-			),
-			Entry(
-				"with no scheme",
-				[]byte(`{
-					"height": 640,
-					"url": "i.scdn.co/image/ab67616d0000b273f142205e336ec0af3e1a4eb0",
-					"width": 640
-				}`),
-			),
-			Entry(
-				"with no host",
-				[]byte(`{
-					"height": 640,
-					"url": ":https://",
-					"width": 640
-				}`),
-			),
+			Entry("with an invalid url", ReadJSON("./testJSON/image/invalid/urlParse.json")),
+			Entry("with no scheme", ReadJSON("./testJSON/image/invalid/noSchema.json")),
+			Entry("with no host", ReadJSON("./testJSON/image/invalid/noHost.json")),
 		)
 	})
 })

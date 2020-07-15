@@ -15,18 +15,7 @@ var _ = Describe("Category", func() {
 	)
 
 	BeforeEach(func() {
-		json = []byte(`{
-			"href": "https://api.spotify.com/v1/browse/categories/hiphop",
-			"icons": [
-			  {
-				"height": 274,
-				"url": "https://t.scdn.co/media/original/hip-274_0a661854d61e29eace5fe63f73495e68_274x274.jpg",
-				"width": 274
-			  }
-			],
-			"id": "hiphop",
-			"name": "Hip-Hop"
-		  }`)
+		json = ReadJSON("./testJSON/category/valid/valid.json")
 	})
 
 	Context("when a Copyright Response is created", func() {
@@ -46,18 +35,7 @@ var _ = Describe("Category", func() {
 		})
 		Context("with invalid JSON", func() {
 			BeforeEach(func() {
-				json = []byte(`{
-					"href": ""https://api.spotify.com/v1/browse/categories/hiphop",
-					"icons": [
-					  {
-						"height": 274,
-						"url": "https://t.scdn.co/media/original/hip-274_0a661854d61e29eace5fe63f73495e68_274x274.jpg",
-						"width": 274
-					  }
-					],
-					"id": "hiphop",
-					"name": "Hip-Hop"
-				}`)
+				json = ReadJSON("./testJSON/category/invalid/invalid.json")
 			})
 
 			JustBeforeEach(func() {

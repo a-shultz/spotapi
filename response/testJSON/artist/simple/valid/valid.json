@@ -1,0 +1,10 @@
+{
+  "external_urls": {
+    "spotify": "https://open.spotify.com/artist/5mlbvTfWUOfDrUIK6dkNzv"
+  },
+  "href": "https://api.spotify.com/v1/artists/5mlbvTfWUOfDrUIK6dkNzv",
+  "id": "5mlbvTfWUOfDrUIK6dkNzv",
+  "name": "Poppy",
+  "type": "artist",
+  "uri": "spotify:artist:5mlbvTfWUOfDrUIK6dkNzv"
+}
