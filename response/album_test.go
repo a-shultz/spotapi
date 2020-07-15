@@ -32,14 +32,28 @@ var _ = Describe("Full Album Response", func() {
 				Expect(err).ToNot(HaveOccurred())
 			})
 		})
+		Context("with invalid json", func() {
+			BeforeEach(func() {
+				json = []byte(`{ "popularity": "very" }`)
+			})
+
+			Specify("a nil pointer is returned", func() {
+				Expect(album).To(BeNil())
+			})
+
+			Specify("an error occurs", func() {
+				Expect(err).To(HaveOccurred())
+			})
+		})
 	})
 })
 
 var _ = Describe("Full Album", func() {
 	var (
-		json  []byte
-		album *response.AlbumFull
-		err   error
+		json          []byte
+		albumResponse *response.AlbumFullResponse
+		album         *response.AlbumFull
+		err           error
 	)
 
 	BeforeEach(func() {
@@ -47,19 +61,20 @@ var _ = Describe("Full Album", func() {
 	})
 
 	JustBeforeEach(func() {
-		album, err = response.NewAlbumFull(json)
+		albumResponse, err = response.NewAlbumFullResponse(json)
+		Expect(albumResponse).ToNot(BeNil())
+		Expect(err).ToNot(HaveOccurred())
+		album = response.NewAlbumFull(albumResponse)
 	})
 
 	Context("when a Full Album is created", func() {
-		Context("with valid JSON", func() {
-			Specify("a AlbumFull pointer is returned", func() {
-				Expect(album).ToNot(BeNil())
-				Expect(album).To(BeAssignableToTypeOf(&response.AlbumFull{}))
-			})
+		Specify("a AlbumFull pointer is returned", func() {
+			Expect(album).ToNot(BeNil())
+			Expect(album).To(BeAssignableToTypeOf(&response.AlbumFull{}))
+		})
 
-			Specify("no error occurs", func() {
-				Expect(err).ToNot(HaveOccurred())
-			})
+		Specify("no error occurs", func() {
+			Expect(err).ToNot(HaveOccurred())
 		})
 	})
 })

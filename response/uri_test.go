@@ -57,6 +57,10 @@ var _ = Describe("URI", func() {
 			It("has a Spotify Play URL", func() {
 				Expect(uri.PlayURL()).To(Equal("https://play.spotify.com/track/6rqhFgbbKwnb9MLmUQDhG6"))
 			})
+
+			It("implements the stringer interface and returns the Spotify URI", func() {
+				Expect(uri.String()).To(Equal("spotify:track:6rqhFgbbKwnb9MLmUQDhG6"))
+			})
 		})
 
 		Context("with invalid input", func() {
@@ -76,7 +80,7 @@ var _ = Describe("URI", func() {
 
 			Context("with an ID that is not in base62 encoding", func() {
 				BeforeEach(func() {
-					id = "aaBB00"
+					id = "a0N         !      222"
 				})
 
 				Specify("a nil pointer is returned", func() {
