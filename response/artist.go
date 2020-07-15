@@ -1,6 +1,7 @@
 package response
 
 import (
+	"encoding/json"
 	"net/url"
 )
 
@@ -24,6 +25,15 @@ type ArtistSimpleResponse struct {
 	Name         string            `json:"name"`
 	Type         string            `json:"type"`
 	URI          string            `json:"uri"`
+}
+
+func NewArtistSimpleResponse(data []byte) (*ArtistSimpleResponse, error) {
+	artist := &ArtistSimpleResponse{}
+	err := json.Unmarshal(data, &artist)
+	if err != nil {
+		return nil, err
+	}
+	return artist, nil
 }
 
 type ArtistSimple struct {
