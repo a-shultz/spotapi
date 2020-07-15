@@ -4,7 +4,9 @@ import (
 	"net/url"
 )
 
-type FullArtist struct {
+type ArtistFullResponse struct{}
+
+type ArtistFull struct {
 	externalURLs map[string]*url.URL
 	followers    Followers
 	genres       []string
@@ -15,7 +17,7 @@ type FullArtist struct {
 	uri          URI
 }
 
-type SimplifiedArtistResponse struct {
+type ArtistSimpleResponse struct {
 	ExternalURLs map[string]string `json:"external_urls"`
 	Href         string            `json:"href"`
 	ID           string            `json:"id"`
@@ -24,9 +26,13 @@ type SimplifiedArtistResponse struct {
 	URI          string            `json:"uri"`
 }
 
-type SimpleArtist struct {
+type ArtistSimple struct {
 	externalURLs map[string]*url.URL
 	href         url.URL
 	name         string
 	uri          URI
 }
+
+type ArtistPageResponse struct{}
+
+type ArtistPage struct{}

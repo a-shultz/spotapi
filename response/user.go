@@ -4,7 +4,9 @@ import (
 	"net/url"
 )
 
-type Private struct {
+type UserPrivateResponse struct{}
+
+type UserPrivate struct {
 	country      string
 	displayName  string
 	email        string
@@ -16,7 +18,9 @@ type Private struct {
 	uri          URI
 }
 
-type PublicUser struct {
+type UserPublicResponse struct{}
+
+type UserPublic struct {
 	displayName  string
 	externalURLs map[string]*url.URL
 	followers    Followers

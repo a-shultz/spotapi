@@ -5,7 +5,9 @@ import (
 	"time"
 )
 
-type FullShow struct {
+type ShowFullResponse struct{}
+
+type ShowFull struct {
 	availableMarkets   []string
 	copyrights         []Copyright
 	description        string
@@ -22,7 +24,9 @@ type FullShow struct {
 	uri                URI
 }
 
-type SimpleShow struct {
+type ShowSimpleResponse struct{}
+
+type ShowSimple struct {
 	availableMarkets   []string
 	copyrights         []Copyright
 	description        string
@@ -38,7 +42,13 @@ type SimpleShow struct {
 	uri                URI
 }
 
-type SavedShow struct {
+type ShowSavedResponse struct{}
+
+type ShowSaved struct {
 	addedAt time.Time
-	show    FullShow
+	show    ShowFull
 }
+
+type ShowSavedPageResponse struct{}
+
+type ShowSavedPage struct{}
