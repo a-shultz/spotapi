@@ -56,14 +56,10 @@ type AlbumFull struct {
 	uri              URI
 }
 
-func NewAlbumFull(data []byte) (*AlbumFull, error) {
-	response, err := NewAlbumFullResponse(data)
-	if err != nil {
-		return nil, err
-	}
+func NewAlbumFull(response *AlbumFullResponse) *AlbumFull {
 	return &AlbumFull{
 		albumType: response.AlbumType,
-	}, nil
+	}
 }
 
 type AlbumSimpleResponse struct {
