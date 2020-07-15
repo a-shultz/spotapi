@@ -8,7 +8,7 @@ import (
 )
 
 type ImageResponse struct {
-	Height uint   `json:"height,int"`
+	Height uint   `json:"height"`
 	URL    string `json:"url"`
 	Width  uint   `json:"width"`
 }
