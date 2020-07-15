@@ -9,7 +9,7 @@ import (
 var _ = Describe("Full Album Response", func() {
 	var (
 		json  []byte
-		album *response.FullAlbumResponse
+		album *response.AlbumFullResponse
 		err   error
 	)
 
@@ -18,14 +18,14 @@ var _ = Describe("Full Album Response", func() {
 	})
 
 	JustBeforeEach(func() {
-		album, err = response.NewFullAlbumResponse(json)
+		album, err = response.NewAlbumFullResponse(json)
 	})
 
 	Context("when a Full Album Response is created", func() {
 		Context("with valid json", func() {
-			Specify("a FullAlbumResponse pointer is returned", func() {
+			Specify("a AlbumFullResponse pointer is returned", func() {
 				Expect(album).ToNot(BeNil())
-				Expect(album).To(BeAssignableToTypeOf(&response.FullAlbumResponse{}))
+				Expect(album).To(BeAssignableToTypeOf(&response.AlbumFullResponse{}))
 			})
 
 			Specify("no error occurs", func() {
@@ -38,7 +38,7 @@ var _ = Describe("Full Album Response", func() {
 var _ = Describe("Full Album", func() {
 	var (
 		json  []byte
-		album *response.FullAlbum
+		album *response.AlbumFull
 		err   error
 	)
 
@@ -47,14 +47,14 @@ var _ = Describe("Full Album", func() {
 	})
 
 	JustBeforeEach(func() {
-		album, err = response.NewFullAlbum(json)
+		album, err = response.NewAlbumFull(json)
 	})
 
 	Context("when a Full Album is created", func() {
 		Context("with valid JSON", func() {
-			Specify("a FullAlbum pointer is returned", func() {
+			Specify("a AlbumFull pointer is returned", func() {
 				Expect(album).ToNot(BeNil())
-				Expect(album).To(BeAssignableToTypeOf(&response.FullAlbum{}))
+				Expect(album).To(BeAssignableToTypeOf(&response.AlbumFull{}))
 			})
 
 			Specify("no error occurs", func() {

@@ -6,31 +6,40 @@ import (
 	"time"
 )
 
-type FullAlbumResponse struct {
-	AlbumType            string                     `json:"album_type"`
-	Artists              []SimplifiedArtistResponse `json:"artists"`
-	AvailableMarkets     []string                   `json:"available_markets"`
-	Copyrights           []CopyrightResponse        `json:"copyrights"`
-	ExternalIDs          map[string]string          `json:"external_ids"`
-	ExternalURLs         map[string]string          `json:"external_urls"`
-	Genres               []string                   `json:"genres"`
-	Href                 string                     `json:"href"`
-	ID                   string                     `json:"id"`
-	Images               []ImageResponse            `json:"images"`
-	Label                string                     `json:"label"`
-	Name                 string                     `json:"name"`
-	Popularity           int                        `json:"popularity"`
-	ReleaseDate          string                     `json:"release_date"`
-	ReleaseDatePrecision string                     `json:"release_date_precision"`
-	Restrictions         map[string]string          `json:"restrictions"`
-	Tracks               TracksPageResponse         `json:"tracks"`
-	Type                 string                     `json:"type"`
-	URI                  string                     `json:"uri"`
+type AlbumFullResponse struct {
+	AlbumType            string                 `json:"album_type"`
+	Artists              []ArtistSimpleResponse `json:"artists"`
+	AvailableMarkets     []string               `json:"available_markets"`
+	Copyrights           []CopyrightResponse    `json:"copyrights"`
+	ExternalIDs          map[string]string      `json:"external_ids"`
+	ExternalURLs         map[string]string      `json:"external_urls"`
+	Genres               []string               `json:"genres"`
+	Href                 string                 `json:"href"`
+	ID                   string                 `json:"id"`
+	Images               []ImageResponse        `json:"images"`
+	Label                string                 `json:"label"`
+	Name                 string                 `json:"name"`
+	Popularity           int                    `json:"popularity"`
+	ReleaseDate          string                 `json:"release_date"`
+	ReleaseDatePrecision string                 `json:"release_date_precision"`
+	Restrictions         map[string]string      `json:"restrictions"`
+	Tracks               TrackPageResponse      `json:"tracks"`
+	Type                 string                 `json:"type"`
+	URI                  string                 `json:"uri"`
 }
 
-type FullAlbum struct {
+func NewAlbumFullResponse(data []byte) (*AlbumFullResponse, error) {
+	var fullAlbumResponse = new(AlbumFullResponse)
+	err := json.Unmarshal(data, &fullAlbumResponse)
+	if err != nil {
+		return nil, err
+	}
+	return fullAlbumResponse, nil
+}
+
+type AlbumFull struct {
 	albumType        string
-	artists          []SimpleArtist
+	artists          []ArtistSimple
 	availableMarkets []string
 	copyrights       []Copyright
 	externalID       map[string]string
@@ -47,46 +56,37 @@ type FullAlbum struct {
 	uri              URI
 }
 
-func NewFullAlbumResponse(data []byte) (*FullAlbumResponse, error) {
-	var fullAlbumResponse = new(FullAlbumResponse)
-	err := json.Unmarshal(data, &fullAlbumResponse)
+func NewAlbumFull(data []byte) (*AlbumFull, error) {
+	response, err := NewAlbumFullResponse(data)
 	if err != nil {
 		return nil, err
 	}
-	return fullAlbumResponse, nil
-}
-
-func NewFullAlbum(data []byte) (*FullAlbum, error) {
-	response, err := NewFullAlbumResponse(data)
-	if err != nil {
-		return nil, err
-	}
-	return &FullAlbum{
+	return &AlbumFull{
 		albumType: response.AlbumType,
 	}, nil
 }
 
-type SimplifiedAlbumResponse struct {
-	AlbumGroup string                  `json:"album_group"`
-	AlbumType string                   `json:"album_type"`
-	Artists []SimplifiedArtistResponse `json:"artists"`
-	AvailableMarkets []string          `json:"availableMarkets"`
-	ExternalURLs map[string]string     `json:"external_urls"`
-	Href string                        `json:"href"`
-	ID string                          `json:"id"`
-	Images []ImageResponse             `json:"images"`
-	Name string                        `json:"name"`
-	ReleaseDate string                 `json:"release_date"`
-	ReleaseDatePrecision string        `json:"release_date_precision"`
-	Restrictions map[string]string     `json:"restrictions"`
-	Type string                        `json:"type"`
-	URI string                         `json:"uri"`
+type AlbumSimpleResponse struct {
+	AlbumGroup           string                 `json:"album_group"`
+	AlbumType            string                 `json:"album_type"`
+	Artists              []ArtistSimpleResponse `json:"artists"`
+	AvailableMarkets     []string               `json:"availableMarkets"`
+	ExternalURLs         map[string]string      `json:"external_urls"`
+	Href                 string                 `json:"href"`
+	ID                   string                 `json:"id"`
+	Images               []ImageResponse        `json:"images"`
+	Name                 string                 `json:"name"`
+	ReleaseDate          string                 `json:"release_date"`
+	ReleaseDatePrecision string                 `json:"release_date_precision"`
+	Restrictions         map[string]string      `json:"restrictions"`
+	Type                 string                 `json:"type"`
+	URI                  string                 `json:"uri"`
 }
 
-type SimplifiedAlbum struct {
+type AlbumSimple struct {
 	albumGroup       string
 	albumType        string
-	artists          []SimpleArtist
+	artists          []ArtistSimple
 	availableMarkets []string
 	externalURLs     map[string]*url.URL
 	genres           []string
@@ -98,7 +98,13 @@ type SimplifiedAlbum struct {
 	uri              URI
 }
 
-type SavedAlbum struct {
+type AlbumSavedResponse struct{}
+
+type AlbumSaved struct {
 	addedAt time.Time
-	album   FullAlbum
+	album   AlbumFull
 }
+
+type AlbumSavedPageResponse struct{}
+
+type AlbumSavedPage struct{}
