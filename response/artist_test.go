@@ -14,21 +14,12 @@ var _ = Describe("Artist Simple Response", func() {
 		err    error
 	)
 
-	BeforeEach(func() {
-		json = []byte(`{
-			"external_urls": {
-			"spotify": "https://open.spotify.com/artist/5mlbvTfWUOfDrUIK6dkNzv"
-			},
-			"href": "https://api.spotify.com/v1/artists/5mlbvTfWUOfDrUIK6dkNzv",
-			"id": "5mlbvTfWUOfDrUIK6dkNzv",
-			"name": "Poppy",
-			"type": "artist",
-			"uri": "spotify:artist:5mlbvTfWUOfDrUIK6dkNzv"
-		}`)
-	})
-
 	Context("when an Artist Simple Response is created", func() {
 		Context("with valid JSON", func() {
+			BeforeEach(func() {
+				json = ReadJSON("./testJSON/artist/simple/valid/valid.json")
+			})
+
 			JustBeforeEach(func() {
 				artist, err = response.NewArtistSimpleResponse(json)
 			})
