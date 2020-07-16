@@ -79,6 +79,15 @@ type AlbumSimpleResponse struct {
 	URI                  string                 `json:"uri"`
 }
 
+func NewAlbumSimpleResponse(data []byte) (*AlbumSimpleResponse, error) {
+	album := &AlbumSimpleResponse{}
+	err := json.Unmarshal(data, &album)
+	if err != nil {
+		return nil, err
+	}
+	return album, nil
+}
+
 type AlbumSimple struct {
 	albumGroup       string
 	albumType        string

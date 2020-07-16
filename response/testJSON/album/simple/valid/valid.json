@@ -1,0 +1,44 @@
+{
+  "album_group": "album",
+  "album_type": "album",
+  "artists": [
+    {
+      "external_urls": {
+        "spotify": "https://open.spotify.com/artist/2x9SpqnPi8rlE9pjHBwmSC"
+      },
+      "href": "https://api.spotify.com/v1/artists/2x9SpqnPi8rlE9pjHBwmSC",
+      "id": "2x9SpqnPi8rlE9pjHBwmSC",
+      "name": "Talking Heads",
+      "type": "artist",
+      "uri": "spotify:artist:2x9SpqnPi8rlE9pjHBwmSC"
+    }
+  ],
+  "external_urls": {
+    "spotify": "https://open.spotify.com/album/4sLCQxMRfn3gAHrBNZtbTH"
+  },
+  "href": "https://api.spotify.com/v1/albums/4sLCQxMRfn3gAHrBNZtbTH",
+  "id": "4sLCQxMRfn3gAHrBNZtbTH",
+  "images": [
+    {
+      "height": 640,
+      "url": "https://i.scdn.co/image/ab67616d0000b273e35e2e2a4bfa8a30a78fc532",
+      "width": 640
+    },
+    {
+      "height": 300,
+      "url": "https://i.scdn.co/image/ab67616d00001e02e35e2e2a4bfa8a30a78fc532",
+      "width": 300
+    },
+    {
+      "height": 64,
+      "url": "https://i.scdn.co/image/ab67616d00004851e35e2e2a4bfa8a30a78fc532",
+      "width": 64
+    }
+  ],
+  "name": "Speaking in Tongues (Deluxe Version)",
+  "release_date": "1983-05-31",
+  "release_date_precision": "day",
+  "total_tracks": 11,
+  "type": "album",
+  "uri": "spotify:album:4sLCQxMRfn3gAHrBNZtbTH"
+}

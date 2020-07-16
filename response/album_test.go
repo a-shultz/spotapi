@@ -78,3 +78,45 @@ var _ = Describe("Full Album", func() {
 		})
 	})
 })
+
+var _ = Describe("Simple Album Response", func() {
+	var (
+		json  []byte
+		album *response.AlbumSimpleResponse
+		err   error
+	)
+
+	JustBeforeEach(func() {
+		album, err = response.NewAlbumSimpleResponse(json)
+	})
+
+	Context("when a Full Album Response is created", func() {
+		Context("with valid json", func() {
+			BeforeEach(func() {
+				json = ReadJSON("./testJSON/album/simple/valid/valid.json")
+			})
+
+			Specify("a AlbumSimpleResponse pointer is returned", func() {
+				Expect(album).ToNot(BeNil())
+				Expect(album).To(BeAssignableToTypeOf(&response.AlbumSimpleResponse{}))
+			})
+
+			Specify("no error occurs", func() {
+				Expect(err).ToNot(HaveOccurred())
+			})
+		})
+		Context("with invalid json", func() {
+			BeforeEach(func() {
+				json = ReadJSON("./testJSON/album/simple/invalid/invalid.json")
+			})
+
+			Specify("a nil pointer is returned", func() {
+				Expect(album).To(BeNil())
+			})
+
+			Specify("an error occurs", func() {
+				Expect(err).To(HaveOccurred())
+			})
+		})
+	})
+})
